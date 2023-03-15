@@ -1,4 +1,9 @@
-on: [push]
+env:
+  RUST_LOG: info
+on:
+  push: {}
+  pull_request:
+    branches: [ "main" ]
 name: CI
 jobs:
   test:

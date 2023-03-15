@@ -28,7 +28,7 @@ rustls = "0.20.8"
 rustls-pemfile = "1.0.2"
 awc = { version = "3.1.1", features=["rustls"]}
 regex = "1.7.1"
-docker-image-reference = { path = "../docker-image-reference", version = "0.1.0" }
+docker-image-reference = { git = "https://github.com/PeterGrace/docker-image-reference.git", version = "0.1.0" }
 cached = {version = "0.42.0"}
 thiserror = "1.0.39"
 array_tool = "1.0.3"

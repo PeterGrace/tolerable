@@ -1,0 +1,14 @@
+---  
+apiVersion: cert-manager.io/v1
+kind: Certificate  
+metadata:  
+  annotations:
+    cert-manager.io/allow-direct-injection: "true" 
+  name: tolerable-webhook
+spec:  
+  secretName: tolerable-tls 
+  dnsNames:  
+    - tolerable-webhook.tolerable.svc  
+    - tolerable-webhook.tolerable.svc.cluster.local  
+  issuerRef:  
+    name: selfsigned

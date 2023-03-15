@@ -1,0 +1,9 @@
+ssl_key_path = "./key.pem"
+ssl_cert_path = "./cert.pem"
+registry_credential_path = "/home/pgrace/repos/tolerable/creds"
+supported_architectures = [ "amd64", "arm64" ]
+
+[tolerations]
+effect = "NoSchedule"
+operator = "Equal"
+key = "kubernetes.io/arch"

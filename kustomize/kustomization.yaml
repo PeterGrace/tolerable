@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: tolerable
+
+commonLabels:
+  app.kubernetes.io/name: tolerable
+
+configMapGenerator:
+- files:
+  - tolerable.toml
+  name: tolerable-config
+
+images:
+- name: SET-IN-KUSTOMIZE/tolerable
+  newName: foobar/library/tolerable
+  newTag: latest
+
+
+resources:
+- ns.tolerable.yaml
+- certificate.webhook.yaml
+- issuer.selfsigned.yaml
+- service.tolerable.yaml
+- svcacct.tolerable.yaml
+- deployment.tolerable.yaml
+- mutatingwebhook.yaml

@@ -1,0 +1,39 @@
+[package]
+name = "tolerable"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dev-dependencies]
+ctor = "0.1.26"
+[dependencies]
+anyhow = "1.0.69"
+pretty_env_logger = "0.4.0"
+kube = {version="0.80.0", default_features=false, features=["derive"]}
+kube-runtime = {version="0.80.0", default_features=false }
+k8s-openapi = {version="0.17.0", features = ["v1_25"], default_features=false}
+log = "0.4.17"
+serde = {version = "1.0.154", features=["derive"]}
+serde_json = "1.0.94"
+prometheus = "0.13.3"
+prometheus-static-metric = "0.5.1"
+lazy_static = "1.4.0"
+actix-web = {version="4.3.1", features=["rustls"]}
+actix-web-prom = "0.6.0"
+strum = "0.24.1"
+strum_macros = "0.24.3"
+config = {version ="0.13.3", features=["toml"]}
+base64 = "0.21.0"
+rustls = "0.20.8"
+rustls-pemfile = "1.0.2"
+awc = { version = "3.1.1", features=["rustls"]}
+regex = "1.7.1"
+docker-image-reference = { path = "../docker-image-reference", version = "0.1.0" }
+cached = {version = "0.42.0"}
+thiserror = "1.0.39"
+array_tool = "1.0.3"
+
+[package.metadata.cross.target.aarch64-unknown-linux-gnu]
+pre-build = ["dpkg --add-architecture arm64 && apt-get -y update &&  apt-get -y install openssl:arm64 libssl-dev:arm64"]
+[package.metadata.cross.target.x86_64-unknown-linux-gnu]
+pre-build = ["dpkg --add-architecture amd64 && apt-get -y update &&  apt-get -y install openssl:amd64 libssl-dev:amd64"]

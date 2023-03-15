@@ -1,0 +1,11 @@
+log_level = "INFO"
+ssl_key_path = "/opt/tolerable/ssl/tls.key"
+ssl_cert_path = "/opt/tolerable/ssl/tls.crt"
+arm_images = [
+"docker.io/ubuntu"
+]
+[tolerations]
+effect = "NoSchedule"
+operator = "Equal"
+key = "kubernetes.io/arch"
+value= "arm64"

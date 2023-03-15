@@ -1,0 +1,30 @@
+---  
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration  
+metadata:  
+  name: tolerable-configuration
+  annotations:  
+    cert-manager.io/inject-ca-from: tolerable/tolerable-webhook
+webhooks:  
+- clientConfig:  
+    caBundle: Cg==
+    service:  
+      name: tolerable-webhook
+      path: /mutate  
+      port: 8443  
+      namespace: "tolerable"  
+  sideEffects: None  
+  admissionReviewVersions: ["v1beta1"]  
+  failurePolicy: Ignore
+  name: webhook.tolerable.dev
+  rules:  
+  - apiGroups:  
+    - ""  
+    apiVersions:  
+    - "v1"
+    operations:  
+    - CREATE  
+    - UPDATE  
+    resources:  
+    - pods  
+    scope: "Namespaced"

@@ -1,0 +1,8 @@
+FROM docker.io/ubuntu:20.04
+ 
+RUN mkdir -p /opt/tolerable 
+WORKDIR /opt/tolerable
+ADD target/aarch64-unknown-linux-gnu/release/tolerable /opt/tolerable/tolerable
+ADD docker/tolerable.toml /opt/tolerable/
+CMD ["/opt/tolerable/tolerable"]
+EXPOSE 8443

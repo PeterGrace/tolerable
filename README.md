@@ -1,3 +1,5 @@
+![Build](https://img.shields.io/github/actions/workflow/status/petergrace/tolerable/test.yaml)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/petergrace/tolerable/latest)
 # tolerable
 ## Auto-configure tolerations for architecture-based taints
 This software program was written due to the author's frustration with running a mixed-architecture kubernetes cluster.  When you are running both amd64 and arm64 processors in your cluster, there is not automatic method of detecting whether an image is built for arm64 or not.  This results in Pods going into CrashLoopBackOff with a log line similar to "exec format error."

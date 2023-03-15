@@ -2,6 +2,9 @@
 name = "tolerable"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/PeterGrace/tolerable"
+description = "kubernetes webhook to set configurable cpu architecture tolerations"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dev-dependencies]

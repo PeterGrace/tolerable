@@ -10,6 +10,8 @@ there is a kustomize/ folder that has a kustomization spec for deploying the ser
 ## configs
 
 ### tolerable.toml
+For each of these settings in `tolerable.toml`, you can override the settings via environment variable, prefixed by TOLERABLE_.  Example: `TOLERABLE_SUPPORTED_ARCHITECTURES=s390x,arm64`
+
 | value | what it is |
 | ----- | ---------- |
 | ssl_key_path | path to private key, pem format |
@@ -37,4 +39,9 @@ secret="bazbat"
 ```
 
 
+## Anticipatory FAQs
+### Why are the creds stored as individual files?
+So that one can mount the credentials individually as subpaths from secrets in kubernetes
+### Can you make an image of tolerable for platform X?
+Yes, open an issue and I'll amend the build process to build an image for it
 

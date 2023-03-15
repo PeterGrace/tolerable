@@ -1,6 +1,7 @@
 log_level = "INFO"
 ssl_key_path = "/opt/tolerable/ssl/tls.key"
 ssl_cert_path = "/opt/tolerable/ssl/tls.crt"
+registry_credential_path = "/opt/tolerable/creds"
 supported_architectures = [ "amd64", "arm64" ]
 [tolerations]
 effect = "NoSchedule"

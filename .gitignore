@@ -1,3 +1,4 @@
 /target
 /cfssl
 /creds
+.secrets

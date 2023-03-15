@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: busybox
+  name: ubuntu-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: busybox
+      app.kubernetes.io/name: ubuntu-test
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: busybox
+        app.kubernetes.io/name: ubuntu-test
     spec:
       containers:
       - image: docker.io/ubuntu
         imagePullPolicy: Always
-        name: busybox
+        name: ubuntu-test
         command:
           - /bin/sleep
           - infinity

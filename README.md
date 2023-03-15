@@ -6,3 +6,35 @@ This software program was written due to the author's frustration with running a
 
 ## quickstart
 there is a kustomize/ folder that has a kustomization spec for deploying the service.  It relies on cert-manager to create the certificates required to enable a MutatingWebhookConfiguration.  If you don't have cert-manager, you'll need to generate these certs manually and patch the containing secret into your deployment.
+
+## configs
+
+### tolerable.toml
+| value | what it is |
+| ----- | ---------- |
+| ssl_key_path | path to private key, pem format |
+| ssl_cert_path | path to cert, pem format |
+| registry_credential_path | specified path to individual credential files, toml format |
+| supported_architectures | array of valid architectures for the kubernetes cluster |
+| [tolerations] | a toml object definition that contains the toleration format for the kubernetes cluster |
+
+### tolerations
+This will be specific to your deployment.  In my case, I set a taint on my arm64 nodes of `kubernetes.io/arch=arm64:NoSchedule` which means only a toleration that matches that taint will be allowed to schedule.  The toleration for this taint is here:
+```
+[tolerations]
+effect = "NoSchedule"
+operator = "Equal"
+key = "kubernetes.io/arch"
+```
+
+### creds files (e.g., docker.io.toml)
+Each registry that you need to auth to should be specified in a toml file, named for the registry name of the registry with .toml suffixed, and the file should contain two keys, `user` and `secret`.
+Example:
+```
+$ cat creds/docker.io.toml
+user="foobar"
+secret="bazbat"
+```
+
+
+

@@ -1,5 +1,6 @@
 env:
   RUST_LOG: debug
+  TOLERABLE_SUPPORTED_ARCHITECTURES: "arm64"
 on:
   push: {}
   pull_request:

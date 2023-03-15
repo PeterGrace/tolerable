@@ -37,7 +37,7 @@ pub async fn validate_manifest(image: String) -> Option<Vec<String>> {
     }
     let cred = get_credentials_for_registry(registry.to_string()).await;
     if registry == "docker.io" {
-        // see const at top of file for commentary
+        // see consts.rs for commentary
         registry = ACTUAL_DOCKER_REGISTRY;
     }
     if manifest_ref.registry_port().is_some() {
@@ -77,7 +77,6 @@ pub async fn validate_manifest(image: String) -> Option<Vec<String>> {
             manifest_req = client
                 .get(&url)
                 .bearer_auth(token)
-                //.append_header(("Authorization", format!("Bearer {}", token)))
                 .insert_header(("Accept", image_manifest_types.join(",")));
     debug!("MANIFEST REQ: {:#?}", manifest_req);
     let mut manifest_rs = manifest_req.send()

@@ -44,6 +44,12 @@ pub async fn mutate_handler(
 
     // figure out if we should mutate
     if kind.kind == "Pod" {
+        // A pod either has a name or a generateName.
+        match object.get("metadata").unwrap().get("name") {
+            Some(name) => { info!("Considering pod {}",name) }
+            None => { info!("Considering generateName {}", object.get("metadata").unwrap().get("generateName").unwrap()) }
+        };
+
         let spec = match object.get("spec") {
             Some(s) => s,
             None => {
@@ -60,12 +66,6 @@ pub async fn mutate_handler(
                     "PodSpec has no containers?",
                 ));
             }
-        };
-
-        // A pod either has a name or a generateName.
-        match object.get("metadata").unwrap().get("name") {
-            Some(name) => { info!("Considering pod {}",name) }
-            None => { info!("Considering generateName {}", object.get("metadata").unwrap().get("generateName").unwrap()) }
         };
 
         let mut match_found: bool = true;

@@ -2,6 +2,7 @@ on:
   push:
     tags:
       - '*'
+name: Create Images
 
 jobs:
   build:
@@ -40,6 +41,6 @@ jobs:
         with:
           context: .
           platforms: linux/amd64, linux/arm64/v8
-          push: ${{ github.event_name != "pull_request" }}
+          push: true
           tags: ${{ steps.docker-meta.outputs.tags }}
           labels: ${{ steps.docker-meta.outputs.labels }}

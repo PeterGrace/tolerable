@@ -5,7 +5,7 @@ on:
   push: {}
   pull_request:
     branches: [ "main" ]
-name: CI
+name: Run Tests
 jobs:
   test:
     name: tolerable

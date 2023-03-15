@@ -1,5 +1,5 @@
 env:
-  RUST_LOG: info
+  RUST_LOG: debug
 on:
   push: {}
   pull_request:

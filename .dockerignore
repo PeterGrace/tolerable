@@ -1,0 +1,4 @@
+target/**/deps
+target/**/build
+target/debug
+target/**/.fingerprint

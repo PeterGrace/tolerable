@@ -12,7 +12,7 @@ configMapGenerator:
 
 images:
 - name: SET-IN-KUSTOMIZE/tolerable
-  newName: foobar/library/tolerable
+  newName: docker.io/petergrace/tolerable
   newTag: latest
 
 

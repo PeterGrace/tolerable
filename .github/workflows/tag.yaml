@@ -6,7 +6,6 @@ name: Create Images
 
 jobs:
   build:
-    needs: 
     runs-on: ubuntu-latest
     permissions:
       contents: read

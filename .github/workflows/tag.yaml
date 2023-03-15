@@ -1,4 +1,7 @@
-on: [tag]
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:

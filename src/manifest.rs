@@ -9,13 +9,8 @@ use docker_image_reference::Reference;
 use crate::read_setting_string;
 use cached::proc_macro::cached;
 use serde_json::Value;
+use crate::consts::*;
 
-const DOCKER_IMAGE_REGEXP: &str = r#"^(?P<repository>[\w.\-_]+((?::\d+|)(?=/[a-z0-9._-]+/[a-z0-9._-]+))|)\(?:/|)(?P<image>[a-z0-9.\-_]+(?:/[a-z0-9.\-_]+|))(:(?P<tag>[\w.\-_]{1,127})|)$"#;
-const TOKEN_AUTH_REGEXP: &str = r#"^Bearer realm="(?P<url>.+)",service="(?P<service>.+)",scope="(?P<scope>.+)"$"#;
-
-// amusingly enough, it seems that docker.io is the only registry allowed to have a different actual dns name,
-// and everyone just seems to go along with this.
-const ACTUAL_DOCKER_REGISTRY: &str = r#"registry-1.docker.io"#;
 
 lazy_static! {
             static ref DOCKER_RE: Regex = Regex::new(DOCKER_IMAGE_REGEXP).unwrap();

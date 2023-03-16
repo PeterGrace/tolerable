@@ -194,8 +194,10 @@ pub async fn get_jwt(url: String, credentials: Option<RegistryCredential>) -> Op
                           cap.name("url").unwrap().as_str(),
                           cap.name("service").unwrap().as_str(),
                           cap.name("scope").unwrap().as_str());
-    let mut auth_req = client.get(authurl.clone())
-        .basic_auth(credentials.clone().unwrap().user, credentials.clone().unwrap().secret);
+    let mut auth_req = client.get(authurl.clone());
+    if credentials.is_some() {
+        auth_req = auth_req.basic_auth(credentials.clone().unwrap().user, credentials.clone().unwrap().secret);
+    }
     debug!("AUTH REQ: {:#?}", auth_req);
     let mut auth_rs = match auth_req
         .send()

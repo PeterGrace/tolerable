@@ -79,9 +79,13 @@ pub async fn validate_manifest(image: String) -> Option<Vec<String>> {
                 .bearer_auth(token)
                 .insert_header(("Accept", image_manifest_types.join(",")));
     debug!("MANIFEST REQ: {:#?}", manifest_req);
-    let mut manifest_rs = manifest_req.send()
-        .await
-        .unwrap();
+    let mut manifest_rs = match manifest_req.send().await {
+        Ok(r) => r,
+        Err(e) => {
+            warn!("Unable to contact for manifest request: {e}");
+            return None;
+        }
+        
 
     // due to the fact that docker.io returns a mime type that actix-web doesn't like, we'll save the body to
     // a variable and attempt to convert it to json there.

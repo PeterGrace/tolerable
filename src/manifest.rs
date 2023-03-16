@@ -85,6 +85,7 @@ pub async fn validate_manifest(image: String) -> Option<Vec<String>> {
             warn!("Unable to contact for manifest request: {e}");
             return None;
         }
+    };
         
 
     // due to the fact that docker.io returns a mime type that actix-web doesn't like, we'll save the body to

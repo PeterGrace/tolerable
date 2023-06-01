@@ -61,23 +61,16 @@ pub async fn validate_manifest(image: String) -> Option<Vec<String>> {
     }
 
     let url = format!("https://{registryport}/v2/{}/manifests/{tag}", image_name);
-    let token = match get_jwt(url.clone(), cred).await {
-        Some(t) => t,
-        None => {
-            warn!("No jwt returned, assuming no auth necessary..");
-            "".to_string()
-        }
-    };
+    let token = get_jwt(url.clone(), cred).await;
     let client = Client::new();
     let image_manifest_types = vec![
         "application/vnd.oci.image.index.v1+json",
         "application/vnd.docker.distribution.manifest.list.v2+json"
     ];
-    let mut manifest_req :ClientRequest;
-            manifest_req = client
-                .get(&url)
-                .bearer_auth(token)
-                .insert_header(("Accept", image_manifest_types.join(",")));
+    let mut manifest_req :ClientRequest= client.get(&url).insert_header(("Accept", image_manifest_types.join(",")));
+    if token.is_some() {
+        manifest_req = manifest_req.bearer_auth(token.unwrap());
+    }
     debug!("MANIFEST REQ: {:#?}", manifest_req);
     let mut manifest_rs = match manifest_req.send().await {
         Ok(r) => r,
@@ -109,6 +102,7 @@ pub async fn validate_manifest(image: String) -> Option<Vec<String>> {
     };
 
     // depending on schemaVersion, we need to work a little differently.
+    let jsondata: String = format!("{:#?}",rs_json);
     let schemaVersion: u64 = match rs_json.get("schemaVersion") {
         Some(v) => v.as_u64().unwrap(),
         None => {

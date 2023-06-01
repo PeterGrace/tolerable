@@ -18,6 +18,12 @@ async fn test_manifest_validator_v2() {
     assert!(results.contains(&expected));
 }
 #[test]
+async fn test_manifest_validator_v2_quay() {
+    let expected = "arm64".to_string();
+    let results = validate_manifest("quay.io/metallb/controller:latest".to_string()).await.unwrap();
+    assert!(results.contains(&expected));
+}
+#[test]
 // redundant because I fixed docker.io schema v1 lookup, but, didn't want to remove the code just
 // in case
 async fn test_manifest_validator_v1() {

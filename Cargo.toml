@@ -1,6 +1,6 @@
 [package]
 name = "tolerable"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 repository = "https://github.com/PeterGrace/tolerable"
 description = "kubernetes webhook to set configurable cpu architecture tolerations"

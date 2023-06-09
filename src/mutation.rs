@@ -68,8 +68,6 @@ pub async fn mutate_handler(
             }
         };
 
-        let mut match_found: bool = true;
-
         let supported_architectures: Vec<String> = match SETTINGS
             .read()
             .unwrap()
@@ -98,27 +96,29 @@ pub async fn mutate_handler(
 
 
         for architecture in supported_architectures {
+            let container_count: u16 = containers.len() as u16;
+            let mut match_count: u16 = 0;
             for container in containers {
                 let obj: HashMap<String, Value> = serde_json::from_value(container.clone()).unwrap();
                 let image = obj.get("image").unwrap().as_str().unwrap();
+
                 let arches = match validate_manifest(image.to_string()).await {
                     Some(a) => a,
                     None => {
                         warn!("Can't find architecture for image {}", image);
-                        match_found = false;
                         vec![]
                     }
                 };
 
                 if arches.contains(&architecture) {
                     info!("HIT: {image} has an image of type {architecture}");
+                    match_count += 1;
                 } else {
                     info!("MISS: image {image} doesn't contain an {architecture} image");
-                    match_found = false;
                 };
 
-
-                if match_found {
+            }
+                if match_count == container_count {
                     let mut arch_toleration = toleration_config.clone();
                     arch_toleration.entry("value".to_string())
                         .and_modify(|val| *val = architecture.clone()).or_insert(architecture.clone());
@@ -130,7 +130,7 @@ pub async fn mutate_handler(
                         "value": arch_toleration
                     }));
                 };
-            }
+
         }
 
         let tolerations = spec.get("tolerations");

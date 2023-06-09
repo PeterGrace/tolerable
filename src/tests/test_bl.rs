@@ -83,3 +83,20 @@ async fn test_mutate_handler_as_pod_matches_arm() {
     assert_eq!(&rs_resp.allowed, &true);
     assert!(&rs_resp.patch.is_some());
 }
+
+#[actix_web::test]
+async fn test_mutate_handler_half_pod_supports_arm() {
+    std::env::set_var("TOLERABLE_SUPPORTED_ARCHITECTURES","arm64");
+    let app = test::init_service(App::new().service(mutate_handler)).await;
+    let review_json =
+        fs::read_to_string("./src/tests/admission-review-pod-half-arm.json").expect("Unable to read file!");
+    let review: AdmissionReview = serde_json::from_str(review_json.as_str()).unwrap();
+    let req = test::TestRequest::post()
+        .uri("/mutate")
+        .set_json(review)
+        .to_request();
+    let resp: AdmissionReview = test::call_and_read_body_json(&app, req).await;
+    let rs_resp = resp.response.unwrap();
+    assert_eq!(&rs_resp.allowed, &true);
+    assert!(&rs_resp.patch.is_none());
+}

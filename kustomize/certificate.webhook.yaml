@@ -8,6 +8,7 @@ metadata:
 spec:  
   secretName: tolerable-tls 
   dnsNames:  
+    - tolerable-webhook.tolerable
     - tolerable-webhook.tolerable.svc  
     - tolerable-webhook.tolerable.svc.cluster.local  
   issuerRef:  
